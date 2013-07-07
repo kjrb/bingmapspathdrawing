@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="scripts/flashcanvas.js"></script>
+    <![endif]-->
+
+    <title>Bing Map</title>
+</head>
+<body>
+<div><button id="btnDraw" style="width: 200px;">Draw</button> <span id="info"></span>
+    <br/>
+    Path Width(km) <input type="text" value="1" id="pathWidth"/>
+    Path Color (rgb) <input type="text" value="255,255,0" id="pathColor" />
+    Line Color (rgb) <input type="text" value="0,0,255" id="lineColor" />
+</div>
+<div id='mapDiv' style="position:relative; width:800px; height:600px; float: left"></div>
+<script>
+
+    $(document).ready(function () {
+        (function GetMap() {
+            var options = { credentials: "your bing maps key", zoom: 12, center: new Microsoft.Maps.Location(38.809771, -77.0321543125) };
+            map = new Microsoft.Maps.Map(document.getElementById('mapDiv'), options);
+
+            Microsoft.Maps.registerModule("PathDrawingModule", "scripts/MouseDrawingModule.js");
+            Microsoft.Maps.loadModule("PathDrawingModule", {
+                callback: function () {
+                    var corridorDrawing = new CorridorDrawing(map);
+                    var isDrawing = false;
+
+                    $("#btnDraw").bind('click',
+                            function (e) {
+                                corridorDrawing.toggleDrawing();
+
+                                isDrawing = !isDrawing;
+                                if (isDrawing) {
+                                    var options = { pathWidth: $("#pathWidth").val(),
+                                        pathColor: $("#pathColor").val(),
+                                        lineColor: $("#lineColor").val()
+                                    }
+                                    corridorDrawing.setDrawingOptions(options);
+                                    $('#info').text('Drawing ...');
+                                    $('#btnDraw').text('Stop Drawing')
+                                } else {
+                                    $('#info').text('');
+                                    $('#btnDraw').text('Draw');
+                                }
+                            });
+                }});
+
+        })();
+    });
+</script>
+
+</body>
+</html>
