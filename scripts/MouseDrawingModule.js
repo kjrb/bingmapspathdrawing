@@ -1,4 +1,11 @@
-function CorridorDrawing(map) {
+/*
+ * Bing Maps Path Drawing Module
+ *
+ * Copyright (c) 2013      KJRB
+ * Released under the MIT License
+ */
+
+function PathDrawing(map) {
     var MME = Microsoft.Maps.Events, MM = Microsoft.Maps,
         exports = {},
         isDrawing = false,

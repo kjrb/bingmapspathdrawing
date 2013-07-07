@@ -22,13 +22,13 @@
 
     $(document).ready(function () {
         (function GetMap() {
-            var options = { credentials: "your bing maps key", zoom: 12, center: new Microsoft.Maps.Location(38.809771, -77.0321543125) };
+            var options = { credentials: "your bing map key", zoom: 12, center: new Microsoft.Maps.Location(38.809771, -77.0321543125) };
             map = new Microsoft.Maps.Map(document.getElementById('mapDiv'), options);
 
             Microsoft.Maps.registerModule("PathDrawingModule", "scripts/MouseDrawingModule.js");
             Microsoft.Maps.loadModule("PathDrawingModule", {
                 callback: function () {
-                    var corridorDrawing = new CorridorDrawing(map);
+                    var corridorDrawing = new PathDrawing(map);
                     var isDrawing = false;
 
                     $("#btnDraw").bind('click',
